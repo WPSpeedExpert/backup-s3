@@ -4,6 +4,7 @@
 # Requirements:       s3cmd and optional Cloudpanel to use Cloudpanel CLI
 # Author:             Brian Chin
 # Author URI:         https://wpspeedexpert.com
+# Version:            0.2
 # Make executable:    chmod +x /home/[website-path]/scripts/backup-s3.sh
 # Execute the script: sudo /home/[website-path]/scripts/backup-s3.sh
 # =========================================================================== #
