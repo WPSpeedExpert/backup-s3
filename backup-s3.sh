@@ -55,7 +55,7 @@ clpctl db:export --databaseName=${DATABASE} --file=$BACKUP_DIR/${DATABASE}.sql.g
   echo "[+] Success: database dump ${BACKUP_DIR}/${DATABASE}.sql.gz"
 
 # Create tar bzip2 of the WordPress installation directory and exclusions
-echo "[+] Create TAR for WP files without the wp-content directory"
+echo "[+] Create tar bzip2 for WP files without the wp-content directory"
 tar -cjvf ${BACKUP_DIR}/wp_files.tar.bz2 --exclude='wp-content' ${WP_DIR}
 
 echo "[+] Creating others.tar.bz2"
