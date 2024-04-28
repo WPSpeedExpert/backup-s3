@@ -1,13 +1,13 @@
 #!/bin/bash
 # =========================================================================== #
-# Description:        Backup WordPress to S3-Compatible Storage on Cloudpanel 2.0
+# Description:        Backup WordPress or website to S3-Compatible Storage 
+# Requirements:       s3cmd and optional Cloudpanel to use Cloudpanel CLI
 # Author:             Brian Chin
 # Author URI:         https://wpspeedexpert.com
-# Version:            0.1
 # Make executable:    chmod +x /home/[website-path]/scripts/backup-s3.sh
 # Execute the script: sudo /home/[website-path]/scripts/backup-s3.sh
 # =========================================================================== #
-
+#
 # Variables
 DATABASE=("database-name")
 WP_DIR=("/home/[website-path]/htdocs/staging.wpspeedexpert.com")
@@ -53,7 +53,7 @@ echo "[+] Creating Database dump..."
 clpctl db:export --databaseName=${DATABASE} --file=$BACKUP_DIR/${DATABASE}.sql.gz
   echo "[+] Success: database dump ${BACKUP_DIR}/${DATABASE}.sql.gz"
 
-# Create TAR of the WordPress installation directory and exclude wp-content
+# Create tar bzip2 of the WordPress installation directory and exclusions
 echo "[+] Create TAR for WP files without the wp-content directory"
 tar -cjvf ${BACKUP_DIR}/wp_files.tar.bz2 --exclude='wp-content' ${WP_DIR}
 
@@ -76,8 +76,7 @@ mv ${BACKUP_DIR} ${SCRIPTS_DIR}/${CURRENT_DATE}
 # echo "[+] Rsync to remote server..."
 # rsync -azP --update --delete --no-perms --no-owner --no-group --no-times ${SCRIPTS_DIR}/${CURRENT_DATE}/  /home/backups/${DATABASE}/{CURRENT_DATE}
 
-
-# Sent to S3-Compatible storage
+# Sent to S3-compatible storage
 echo "[+] Uploading backup to S3..."
 $S3_CMD sync ${SCRIPTS_DIR}/${CURRENT_DATE} ${S3_BUCKET}
 # $S3_CMD put -r ${SCRIPTS_DIR}/${CURRENT_DATE} ${S3_BUCKET}
