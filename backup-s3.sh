@@ -73,10 +73,6 @@ tar -cjvf ${BACKUP_DIR}/plugins.tar.bz2 ${PLUGINS_DIR}
 # Rename backup directory
 mv ${BACKUP_DIR} ${SCRIPTS_DIR}/${CURRENT_DATE}
 
-# Rsync to remote server (optional) - edit remote location
-# echo "[+] Rsync to remote server..."
-# rsync -azP --update --delete --no-perms --no-owner --no-group --no-times ${SCRIPTS_DIR}/${CURRENT_DATE}/  /home/backups/${DATABASE}/{CURRENT_DATE}
-
 # Sent to S3-compatible storage
 echo "[+] Uploading backup to S3..."
 $S3_CMD sync ${SCRIPTS_DIR}/${CURRENT_DATE} ${S3_BUCKET}
