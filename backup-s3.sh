@@ -4,18 +4,18 @@
 # Requirements:       s3cmd and optional Cloudpanel to use Cloudpanel CLI
 # Author:             Brian Chin
 # Author URI:         https://wpspeedexpert.com
-# Version:            0.2
+# Version:            0.3
 # Make executable:    chmod +x /home/[website-path]/scripts/backup-s3.sh
 # Execute the script: sudo /home/[website-path]/scripts/backup-s3.sh
 # =========================================================================== #
 #
 # Variables
 DATABASE=("database-name")
-WP_DIR=("/home/[website-path]/htdocs/staging.wpspeedexpert.com")
-UPLOADS_DIR=("/home/[website-path]/htdocs/staging.wpspeedexpert.com/wp-content/uploads")
-THEMES_DIR=("/home/[website-path]/htdocs/staging.wpspeedexpert.com/wp-content/themes")
-PLUGINS_DIR=("/home/[website-path]/htdocs/staging.wpspeedexpert.com/wp-content/plugins")
-WPCONTENT_DIR=("/home/[website-path]/htdocs/staging.wpspeedexpert.com/wp-content")
+WP_DIR=("/home/[website-path]/htdocs/wpspeedexpert.com")
+UPLOADS_DIR=("/home/[website-path]/htdocs/wpspeedexpert.com/wp-content/uploads")
+THEMES_DIR=("/home/[website-path]/htdocs/wpspeedexpert.com/wp-content/themes")
+PLUGINS_DIR=("/home/[website-path]/htdocs/wpspeedexpert.com/wp-content/plugins")
+WPCONTENT_DIR=("/home/[website-path]/htdocs/wpspeedexpert.com/wp-content")
 
 BACKUP_DIR=/home/[website-path]/scripts/backups
 SCRIPTS_DIR=/home/[website-path]/scripts
@@ -80,7 +80,15 @@ mv ${BACKUP_DIR} ${SCRIPTS_DIR}/${CURRENT_DATE}
 # Sent to S3-compatible storage
 echo "[+] Uploading backup to S3..."
 $S3_CMD sync ${SCRIPTS_DIR}/${CURRENT_DATE} ${S3_BUCKET}
-# $S3_CMD put -r ${SCRIPTS_DIR}/${CURRENT_DATE} ${S3_BUCKET}
+
+# Remove files from s3 older than xx days using a Lifecycle Policy
+# https://www.linode.com/docs/products/storage/object-storage/guides/lifecycle-policies/
+#
+# Delete lifecycle policy (un)comment to activate or deactivate
+# s3cmd dellifecycle ${S3_BUCKET}
+#
+# Upload lifecycle_policy.xml (un)comment to activate or deactivate
+# s3cmd setlifecycle ${SCRIPTS_DIR}/lifecycle_policy.xml ${S3_BUCKET}
 
 # Clean up files
 echo "[+] Removing local files..."
