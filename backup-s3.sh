@@ -1,8 +1,8 @@
 #!/bin/bash
 # =========================================================================== #
-# Description:        Backup WordPress or website to S3-Compatible Storage 
+# Description:        Backup WordPress or website to S3-compatible storage 
 # Requirements:       s3cmd and optional Cloudpanel to use Cloudpanel CLI
-# Author:             Brian Chin
+# Author:             WP Speed Expert
 # Author URI:         https://wpspeedexpert.com
 # Version:            0.3
 # Make executable:    chmod +x /home/[website-path]/scripts/backup-s3.sh
